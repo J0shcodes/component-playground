@@ -13,16 +13,21 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.25.9",
+    "@babel/preset-typescript": "^7.26.0",
     "@babel/runtime": "^7.26.0",
     "@babel/standalone": "^7.26.2",
     "@monaco-editor/react": "^4.6.0",
     "@types/babel__standalone": "^7.1.9",
     "@uiw/react-split": "^5.9.3",
+    "axios": "^1.7.9",
     "lucide-react": "^0.460.0",
     "monaco-editor": "^0.52.0",
     "next": "15.0.3",
+    "next-share": "^0.27.0",
     "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-live": "^4.1.8"
   },
   "devDependencies": {
     "@types/node": "^20",
