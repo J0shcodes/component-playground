@@ -49,7 +49,7 @@ const CodeEditor: FC<CodeEditorProps> = ({code, onChange, language = 'typescript
     }
 
     return (
-        <div className="w-1/2 border-r flex-1 flex flex-col">
+        <div className="md:w-1/2 border-r flex-1 flex flex-col md:h-full h-1/3">
             <div className="h-8 bg-gray-100 border-b border-gray-200 px-4 flex items-center">
                 <span className="text-sm font-medium text-black">Component.tsx</span>
             </div>

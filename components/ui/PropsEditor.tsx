@@ -1,5 +1,6 @@
 import {useState, FC, SyntheticEvent} from "react"
 import { ComponentProps } from "@/types"
+import PropsDropdown from "../PropsDropdown";
 
 interface PropsEditorProps {
     props?: ComponentProps;
@@ -11,6 +12,7 @@ const PropsEditor: FC<PropsEditorProps> = ({props = {}, onChange}) => {
     const [propKey, setPropKey] = useState<string>("")
     const [propValue, setPropValue] = useState<any>()
     const [showPropForm, setShowPropForm] = useState<boolean>(false)
+    const [propType, setPropType] = useState<string>("string")
 
     const handlePropChange = (key: string, value: string) => {
         const newProps = {...localProps, [key]: value}
@@ -18,43 +20,39 @@ const PropsEditor: FC<PropsEditorProps> = ({props = {}, onChange}) => {
         onChange(newProps)
     }
 
+    const setProp = (newKey: string, value: any) => {
+      const newProps = { ...localProps, [newKey]: value };
+      setLocalProps(newProps);
+      onChange(newProps);
+      setShowPropForm(false)  
+      console.log("newProps:", newProps)
+      console.log("localProps:", localProps)
+    }
+
     const addNewProp = (e: SyntheticEvent) => {
       e.preventDefault()
         // const newKey = `prop${Object.keys(localProps).length + 1}`;
-        const newKey = propKey
-        const newProps = { ...localProps, [newKey]: propValue };
-        setLocalProps(newProps);
-        onChange(newProps);
-        console.log("newProps:", newProps)
-        console.log("localProps:", localProps)
-        setShowPropForm(false)
+      console.log(propType)
+      const newKey = propKey
+      if(propType === "array" || propType === "object") {
+        let parsedValue: any = propValue
+        parsedValue = JSON.parse(propValue)
+        setProp(newKey, parsedValue)        
+        return
+      }
+      setProp(newKey, propValue)
     };
 
     return (
-        <div className="h-1/3 min-h-[200px]">
-            <div className="h-8 bg-gray-100 border-b border-gray-200 px-4 flex items-center">
+        <div className="md:h-1/3 min-h-[200px] h-1/2">
+            <div className="h-8 bg-gray-100 border-b border-gray-200 px-4 flex items-center justify-between">
                <span className="text-sm font-medium text-black">Props</span>
+               <PropsDropdown setPropType={setPropType}/>
             </div>
             <div className="p-4">
             <div className="space-y-2">
                     {Object.keys(localProps).length > 0 ? (
                         Object.entries(localProps).map(([key, value]) => (
-                            // <div key={key} className="flex space-x-2">
-                            //     <input
-                            //         type="text"
-                            //         placeholder="Prop name"
-                            //         value={key}
-                            //         className="border p-1 rounded text-black"
-                            //         readOnly
-                            //     />
-                            //     <input
-                            //         type="text"
-                            //         placeholder="Value"
-                            //         value={String(value)}
-                            //         onChange={(e) => handlePropChange(key, e.target.value)}
-                            //         className="border p-1 rounded flex-1 text-black"
-                            //     />
-                            // </div>
                             <div className="flex justify-between w-[50%] border border-solid rounded p-1">
                               <div key={key}>{key}:</div>
                               <div>{String(value)}</div>
@@ -89,37 +87,7 @@ const PropsEditor: FC<PropsEditorProps> = ({props = {}, onChange}) => {
                     >
                         Add a Prop
                     </button>) : null}
-                </div>
-                {/* {localProps ? (
-                  <>
-                    {
-                      Object.entries(localProps).map(
-                        ([key, value]) => (
-                          <div key={key} className="flex space-x-2">
-                            <input
-                              type="text"
-                              placeholder="Prop name"
-                              value={key}
-                              className="border p-1 rounded"
-                              readOnly
-                            />
-                            <input
-                              type="text"
-                              placeholder="Value"
-                              value={String(value)}
-                              onChange={(e) => handlePropChange(key, e.target.value)}
-                              className="border p-1 rounded flex-1"
-                            />
-                          </div>
-                        )
-                      )
-                    }
-                  </>
-                ) : 
-                  <div className="space-y-2">
-                    <div className="text-sm text-gray-200">No props defined</div>
-                  </div>
-             }   */}               
+                </div>            
             </div>
         </div>
     )

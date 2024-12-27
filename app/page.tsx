@@ -46,15 +46,28 @@ export default function Home() {
       <title>View my code</title>
     </Head>
     <section className="flex-1 flex">
-      <Split mode="horizontal" style={{width: "100%"}}>
-        <CodeEditor code={code} onChange={value => setCode(value || "")}/>
-        <Split mode="vertical" style={{width: "50%"}}>
-          {/* <div className="w-1/2"> */}
-            <Preview code={code} props={props}/>
-            <PropsEditor props={props} onChange={setProps}/>
-          {/* </div> */}
-        </Split>       
-      </Split>
+      <div className="md:block hidden w-full">
+        <Split mode="horizontal">
+          <CodeEditor code={code} onChange={value => setCode(value || "")}/>
+          <Split mode="vertical" style={{width: "50%"}}>
+            {/* <div className="w-1/2"> */}
+              <Preview code={code} props={props}/>
+              <PropsEditor props={props} onChange={setProps}/>
+            {/* </div> */}
+          </Split>       
+        </Split>
+      </div>
+      <div className="md:hidden w-full">
+       <Split mode="vertical">
+          <CodeEditor code={code} onChange={value => setCode(value || "")}/>
+          <Split mode="vertical" style={{width: "100%", height: "50%"}}>
+            {/* <div className="w-1/2"> */}
+              <Preview code={code} props={props}/>
+              <PropsEditor props={props} onChange={setProps}/>
+            {/* </div> */}
+          </Split>       
+        </Split>
+      </div>
     </section>
     </>
   );
