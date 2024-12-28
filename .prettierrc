@@ -6,6 +6,6 @@
     "singleQuote": false,
     "tabWidth": 2,
     "trailingComma": "all",
-    "plugins": ["prettier-plugin-tailwindcss", "babel-plugin-styled-components"]
+    "plugins": ["prettier-plugin-tailwindcss"]
 }
   
